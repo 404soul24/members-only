@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Members Only</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="nav-brand">Members Only</a>
+    <div class="nav-links">
+      <% if (currentUser) { %>
+        <span class="nav-user">Welcome, <%= currentUser.first_name %></span>
+        <% if (!currentUser.membership) { %>
+          <a href="/join-club" class="nav-link">Join the Club</a>
+        <% } %>
+        <% if (!currentUser.admin) { %>
+          <a href="/become-admin" class="nav-link">Become Admin</a>
+        <% } %>
+        <a href="/new-message" class="nav-link">New Message</a>
+        <a href="/logout" class="nav-link">Logout</a>
+      <% } else { %>
+        <a href="/login" class="nav-link">Login</a>
+        <a href="/sign-up" class="nav-link">Sign Up</a>
+      <% } %>
+    </div>
+  </nav>
+  <main class="container">

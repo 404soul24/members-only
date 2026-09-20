@@ -1,0 +1,18 @@
+<nav>
+  <a href="/" class="nav-brand">Members Only</a>
+  <ul class="nav-links">
+    <% if (currentUser) { %>
+      <li><span class="nav-user"><%= currentUser.first_name %></span></li>
+      <% if (!currentUser.membership) { %>
+        <li><a href="/become-member">Join</a></li>
+      <% } %>
+      <% if (currentUser.membership && !currentUser.admin) { %>
+        <li><a href="/become-admin">Admin</a></li>
+      <% } %>
+      <li><a href="/logout">Sign out</a></li>
+    <% } else { %>
+      <li><a href="/login">Sign in</a></li>
+      <li><a href="/sign-up">Sign up</a></li>
+    <% } %>
+  </ul>
+</nav>

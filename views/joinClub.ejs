@@ -1,0 +1,34 @@
+<%- include('partials/header') %>
+
+<div class="form-container">
+  <h1>Join the Club</h1>
+
+  <% if (user && user.membership) { %>
+    <div class="success-message">
+      <p>You are already a member! Enjoy seeing who posted each message.</p>
+    </div>
+  <% } else { %>
+    <p class="form-description">Enter the secret passcode to become a member. Only members can see who posted each message.</p>
+
+    <% if (errors.length > 0) { %>
+      <div class="errors">
+        <% errors.forEach(error => { %>
+          <p class="error"><%= error.msg %></p>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <form action="/join-club" method="POST" class="auth-form">
+      <div class="form-group">
+        <label for="passcode">Secret Passcode</label>
+        <input type="password" id="passcode" name="passcode" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Join Club</button>
+    </form>
+  <% } %>
+
+  <p class="form-footer"><a href="/">Back to Home</a></p>
+</div>
+
+<%- include('partials/footer') %>

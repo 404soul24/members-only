@@ -1,0 +1,66 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<section class="hero">
+  <h1>The Board</h1>
+  <p>Messages from our members. Sign in to see who's behind the words.</p>
+</section>
+
+<main class="container">
+  <% if (currentUser && currentUser.membership) { %>
+    <div class="message-form">
+      <h2>Leave a message</h2>
+      <form action="/messages" method="POST">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" required maxlength="255">
+        </div>
+        <div class="form-group">
+          <label for="text">Message</label>
+          <textarea id="text" name="text" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Post</button>
+      </form>
+    </div>
+  <% } %>
+
+  <h2 class="messages-heading">Recent messages</h2>
+
+  <% if (messages.length === 0) { %>
+    <p class="no-messages">No messages yet.</p>
+  <% } else { %>
+    <% messages.forEach(msg => { %>
+      <article class="message">
+        <div class="message-header">
+          <span class="message-title"><%= msg.title %></span>
+          <span class="message-meta"><%= new Date(msg.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></span>
+        </div>
+        <% if (currentUser && currentUser.membership) { %>
+          <div class="message-author"><%= msg.first_name %> <%= msg.last_name %></div>
+        <% } %>
+        <p class="message-text"><%= msg.text %></p>
+        <% if (currentUser && currentUser.admin) { %>
+          <div class="message-actions">
+            <form action="/messages/<%= msg.id %>/delete" method="POST" onsubmit="return confirm('Delete this message?')">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        <% } %>
+      </article>
+    <% }) %>
+  <% } %>
+
+  <% if (!currentUser) { %>
+    <div class="upgrade-prompt">
+      <p>Sign in to see who wrote these messages.</p>
+      <a href="/sign-up" class="btn btn-ghost">Create an account</a>
+    </div>
+  <% } else if (!currentUser.membership) { %>
+    <div class="upgrade-prompt">
+      <p>Become a member to see author names and post messages.</p>
+      <a href="/become-member" class="btn btn-ghost">Become a member</a>
+    </div>
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>

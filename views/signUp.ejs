@@ -1,0 +1,47 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Create an account</h1>
+    <p class="subtitle">Join the board</p>
+
+    <% if (errors.length > 0) { %>
+      <ul class="errors">
+        <% errors.forEach(err => { %>
+          <li><%= err.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <form action="/sign-up" method="POST">
+      <div class="form-group">
+        <label for="firstName">First name</label>
+        <input type="text" id="firstName" name="firstName" value="<%= formData.firstName || '' %>" required>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last name</label>
+        <input type="text" id="lastName" name="lastName" value="<%= formData.lastName || '' %>" required>
+      </div>
+      <div class="form-group">
+        <label for="username">Email</label>
+        <input type="email" id="username" name="username" value="<%= formData.username || '' %>" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required minlength="6">
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Sign up</button>
+    </form>
+
+    <div class="auth-footer">
+      Already have an account? <a href="/login">Sign in</a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

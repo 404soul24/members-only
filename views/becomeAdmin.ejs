@@ -1,0 +1,31 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<div class="auth-page">
+  <div class="auth-card">
+    <h1>Become an admin</h1>
+    <p class="subtitle">Enter the admin passcode to gain moderation powers</p>
+
+    <% if (errors.length > 0) { %>
+      <ul class="errors">
+        <% errors.forEach(err => { %>
+          <li><%= err.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <form action="/become-admin" method="POST">
+      <div class="form-group">
+        <label for="passcode">Passcode</label>
+        <input type="password" id="passcode" name="passcode" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Upgrade</button>
+    </form>
+
+    <div class="auth-footer">
+      <a href="/">Back to the board</a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
