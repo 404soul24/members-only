@@ -49,7 +49,11 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something went wrong');
 });
 
+const initDatabase = require('./config/initDb');
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+
+initDatabase().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
 });
